@@ -21,25 +21,6 @@ module.exports.getMyInfo = (req, res, next) => {
     .catch(next);
 };
 
-// обновляем информацию о текущем пользователе
-module.exports.updateUser = (req, res, next) => {
-  const { email, name } = req.body;
-  Users.findByIdAndUpdate(req.user._id, { email, name }, { runValidators: true, new: true })
-    .orFail(() => {
-      next(new ResourceUnavailableError('Запрашиваемый пользователь не найден'));
-    })
-    .then((user) => {
-      res.send({ data: user });
-    })
-    .catch((err) => {
-      if (err.codeName === 'DuplicateKey') {
-        next(new NotUniqueEmailError('Такой email уже зарегистрирован'));
-      } else {
-        next(err);
-      }
-    });
-};
-
 // логин пользователя
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
@@ -53,15 +34,20 @@ module.exports.login = (req, res, next) => {
           if (!matched) {
             next(new AuthorizationError('Неправильные почта или пароль'));
           } else {
-            const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
-              expiresIn: '7d',
-            });
-            res.cookie('movieExplorerToken', token, {
-              maxAge: 604800000,
-              httpOnly: true,
-              sameSite: 'none',
-              secure: true,
-            })
+            const token = jwt.sign(
+              { _id: user._id },
+              NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+              {
+                expiresIn: '7d',
+              },
+            );
+            res
+              .cookie('xenBlogApiToken', token, {
+                maxAge: 604800000,
+                httpOnly: true,
+                sameSite: 'none',
+                secure: true,
+              })
               .send({ _id: req.body._id });
           }
         });
@@ -80,7 +66,7 @@ module.exports.login = (req, res, next) => {
 // логаут пользователя
 module.exports.logout = (req, res) => {
   res
-    .clearCookie('movieExplorerToken', { httpOnly: true, sameSite: 'none', secure: true })
+    .clearCookie('xenBlogApiToken', { httpOnly: true, sameSite: 'none', secure: true })
     .status(200)
     .send({ message: 'Куки токен удалён' });
 };
