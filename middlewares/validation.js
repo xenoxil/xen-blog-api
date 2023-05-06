@@ -83,16 +83,17 @@ export const postIdValidation = celebrate({
 
 export const postValidation = celebrate({
   body: Joi.object().keys({
-    date: Joi.date().required().messages({
-      'number.required': 'Поле "date" обязательно',
-    }),
     message: Joi.string().required().min(2).max(4000).messages({
       'string.required': 'Поле "сообщение" обязательно',
     }),
-    postId: Joi.number().required().integer().positive().messages({
-      'number.integer': 'Поле "postId" должно быть целочисленным',
-      'number.required': 'Поле "postId" должно быть заполнено',
-      'number.positive': 'Поле "postId" должно быть положительным',
-    }),
   }),
 });
+
+// export const PostValidation = celebrate({
+//   body: Joi.object().keys({
+//     message: Joi.string().required().min(2).max(4000).messages({
+//       'string.required': 'Поле "сообщение" обязательно',
+//     }),
+
+//   }),
+// });

@@ -12,30 +12,24 @@
     "https"
   ],
   "paths": {
-    "/{descriptionArrayofalltodos}": {
+    "/signin": {
       "post": {
-        "description": "Get all todos",
+        "description": "",
+        "tags": [
+          "sign"
+        ],
         "parameters": [
-          {
-            "name": "descriptionArrayofalltodos",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "_id": {
-                  "example": "any"
-                },
                 "email": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -47,6 +41,9 @@
     "/signup": {
       "post": {
         "description": "",
+        "tags": [
+          "sign"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -55,13 +52,13 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -76,14 +73,23 @@
     },
     "/signout": {
       "delete": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "description": "удаляет куки токен",
+        "tags": [
+          "sign"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/users/me": {
       "get": {
         "description": "",
+        "tags": [
+          "users"
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -95,21 +101,14 @@
     "/posts/{page}": {
       "get": {
         "description": "",
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "page",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "1",
-            "in": "query",
             "type": "string"
           }
         ],
@@ -123,6 +122,9 @@
     "/posts/": {
       "post": {
         "description": "",
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -130,11 +132,8 @@
             "schema": {
               "type": "object",
               "properties": {
-                "date": {
-                  "example": "any"
-                },
                 "message": {
-                  "example": "any"
+                  "example": "Post message"
                 }
               }
             }
@@ -150,6 +149,9 @@
     "/posts/{postId}": {
       "patch": {
         "description": "",
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "postId",
@@ -163,14 +165,8 @@
             "schema": {
               "type": "object",
               "properties": {
-                "date": {
-                  "example": "any"
-                },
                 "message": {
-                  "example": "any"
-                },
-                "owner": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -184,6 +180,9 @@
       },
       "delete": {
         "description": "",
+        "tags": [
+          "posts"
+        ],
         "parameters": [
           {
             "name": "postId",
@@ -197,14 +196,6 @@
             "description": "OK"
           }
         }
-      }
-    }
-  },
-  "definitions": {
-    "Posts": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Posts"
       }
     }
   }

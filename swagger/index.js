@@ -9,22 +9,7 @@ const doc = {
     title: 'xen-blog-api',
     description: 'Blog API',
   },
-  // что-то типа моделей
-  definitions: {
-    // модель задачи
-    Posts: {
-      id: '1',
-      date: '23.04.15',
-      message: 'askjdfaksdlkfaklsdfkjkjszdkf',
-    },
-    // модель массива задач
-    Posts: [
-      {
-        // ссылка на модель задачи
-        $ref: '#/definitions/Posts',
-      },
-    ],
-  },
+
   host: 'localhost:3000',
   schemes: ['http', 'https'],
 };

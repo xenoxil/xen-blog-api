@@ -18,11 +18,8 @@ const postSchema = new mongoose.Schema({
     required: true, // обязательное поле
     ref: 'user',
   },
-  postId: {
-    type: Number,
-    required: true, // обязательное поле
-  },
 });
+
 postSchema.plugin(mongoosePaginate);
 
 export default mongoose.model('post', postSchema);
