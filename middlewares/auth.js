@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const AuthorizationError = require('../errors/AuthorizationError');
+import jwt from 'jsonwebtoken';
+import AuthorizationError from '../errors/AuthorizationError.js';
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   const token = req.cookies.xenBlogApiToken;
   if (!token) {
     next(new AuthorizationError('Необходима авторизация'));

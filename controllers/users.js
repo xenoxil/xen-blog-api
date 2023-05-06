@@ -1,16 +1,17 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const Users = require('../models/user');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import Users from '../models/user.js';
+import ResourceUnavailableError from '../errors/ResourceUnavailableError.js';
+import AuthorizationError from '../errors/AuthorizationError.js';
+import BadRequestError from '../errors/BadRequestError.js';
+import NotUniqueEmailError from '../errors/NotUniqueEmailError.js';
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-const ResourceUnavailableError = require('../errors/ResourceUnavailableError');
-const AuthorizationError = require('../errors/AuthorizationError');
-const BadRequestError = require('../errors/BadRequestError');
-const NotUniqueEmailError = require('../errors/NotUniqueEmailError');
+// const { sign } = jsonwebtoken;
 
 // получаем информацию о текущем пользователе
-module.exports.getMyInfo = (req, res, next) => {
+export function getMyInfo(req, res, next) {
   Users.findById(req.user._id)
     .orFail(() => {
       next(new ResourceUnavailableError('Запрашиваемый пользователь не найден'));
@@ -19,10 +20,10 @@ module.exports.getMyInfo = (req, res, next) => {
       res.send({ data: user });
     })
     .catch(next);
-};
+}
 
 // логин пользователя
-module.exports.login = (req, res, next) => {
+export function login(req, res, next) {
   const { email, password } = req.body;
 
   Users.findOne({ email })
@@ -61,18 +62,18 @@ module.exports.login = (req, res, next) => {
         next(err);
       }
     });
-};
+}
 
 // логаут пользователя
-module.exports.logout = (req, res) => {
+export function logout(req, res) {
   res
     .clearCookie('xenBlogApiToken', { httpOnly: true, sameSite: 'none', secure: true })
     .status(200)
     .send({ message: 'Куки токен удалён' });
-};
+}
 
 // создать пользователя
-module.exports.createUser = (req, res, next) => {
+export function createUser(req, res, next) {
   const { name, email, password } = req.body;
   Users.findOne({ email })
     .then((user) => {
@@ -96,4 +97,4 @@ module.exports.createUser = (req, res, next) => {
         next(err);
       }
     });
-};
+}

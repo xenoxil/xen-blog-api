@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const mongoosePaginate = require('mongoose-paginate-v2');
+// import { Schema, model } from 'mongoose';
+import validator from 'validator';
+import mongoosePaginate from 'mongoose-paginate-v2';
+import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
   message: {
@@ -17,13 +18,10 @@ const postSchema = new mongoose.Schema({
     required: true, // обязательное поле
     ref: 'user',
   },
-  postId: {
-    type: Number,
-    required: true, // обязательное поле
-  },
 });
+
 postSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model('post', postSchema);
+export default mongoose.model('post', postSchema);
 
 // postSchema.paginate().then({});

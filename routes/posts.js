@@ -1,15 +1,16 @@
-const router = require('express').Router();
+import express from 'express';
+const router = express.Router();
 
-const {
+import {
   getPostsWithPagination,
   createPost,
   updatePost,
   deletePost,
-} = require('../controllers/posts');
-const { postIdValidation, postValidation } = require('../middlewares/validation');
+} from '../controllers/posts.js';
+import { postIdValidation, postValidation } from '../middlewares/validation.js';
 
 router.get('/:page', getPostsWithPagination);
 router.post('/', postValidation, createPost);
 router.patch('/:postId', postValidation, updatePost);
 router.delete('/:postId', postIdValidation, deletePost);
-module.exports = router;
+export default router;

@@ -1,32 +1,32 @@
-const Posts = require('../models/post');
-const Users = require('../models/user');
-const ResourceUnavailableError = require('../errors/ResourceUnavailableError');
-const BadRequestError = require('../errors/BadRequestError');
-const PermissionError = require('../errors/PermissionError');
+import Posts from '../models/post.js';
+import Users from '../models/user.js';
+import ResourceUnavailableError from '../errors/ResourceUnavailableError.js';
+import BadRequestError from '../errors/BadRequestError.js';
+import PermissionError from '../errors/PermissionError.js';
 
 //  получаем список всех фильмов сохранённых пользователем
-module.exports.getPostsWithPagination = (req, res, next) => {
+export function getPostsWithPagination(req, res, next) {
   const myCustomLabels = {
     totalDocs: 'totalPosts',
     limit: 'postsPerPage',
     page: 'currentPage',
     totalPages: 'totalPages',
   };
-  const { page = Math.max(req.query.page || 1, 1) } = req.query;
+  const { page = Math.max(req.params.page || 1, 1) } = req.query;
   Posts.paginate({}, { page, limit: 20, customLabels: myCustomLabels })
     .then((posts) => {
       res.send({ posts: posts });
     })
     .catch(next);
-};
+}
 
 // создаём пост
-module.exports.createPost = (req, res, next) => {
-  const { date, message } = req.body;
+export function createPost(req, res, next) {
+  const { message } = req.body;
   Users.findById(req.user._id)
     .then((user) => {
       Posts.create({
-        date,
+        date: new Date(),
         message,
         owner: user,
       }).then((record) => {
@@ -41,27 +41,33 @@ module.exports.createPost = (req, res, next) => {
         next(err);
       }
     });
-};
+}
 
 // обновляем пост
-module.exports.updatePost = (req, res, next) => {
-  const { date, message, owner } = req.body;
-  if (req.user._id !== owner.id) {
-    next(new PermissionError('Ошибка. Пользователь не является автором данного поста'));
-  }
+export function updatePost(req, res, next) {
+  const { message } = req.body;
   Users.findById(req.user._id)
     .then((user) => {
-      Posts.findByIdAndUpdate(req.params.postId, {
-        date,
-        message,
-        owner: user,
-        postId: req.params.postId,
-      })
+      Posts.findById(req.params.postId)
         .orFail(() => {
           next(new ResourceUnavailableError('Пост не найден'));
         })
         .then((record) => {
-          res.send(record);
+          if (req.user._id != record.owner) {
+            next(new PermissionError('Ошибка. Пользователь не является автором данного поста'));
+          } else {
+            Posts.findByIdAndUpdate(
+              req.params.postId,
+              {
+                date: record.date,
+                message,
+                owner: user,
+              },
+              { returnDocument: 'after' },
+            ).then((newRecord) => {
+              res.send(newRecord);
+            });
+          }
         });
     })
     .catch((err) => {
@@ -72,15 +78,15 @@ module.exports.updatePost = (req, res, next) => {
         next(err);
       }
     });
-};
+}
 
-module.exports.deletePost = (req, res, next) => {
-  Posts.findById(postId)
+export function deletePost(req, res, next) {
+  Posts.findById(req.params.postId)
     .orFail(() => {
       next(new ResourceUnavailableError('Пост не найден'));
     })
     .then((post) => {
-      if (post.owner.id === req.user._id) {
+      if (post.owner == req.user._id) {
         Posts.findByIdAndRemove(req.params.postId)
           .then((deletedPost) => res.send({ data: deletedPost }))
           .catch((err) => {
@@ -94,4 +100,4 @@ module.exports.deletePost = (req, res, next) => {
         next(new PermissionError('Ошибка. Пользователь не является автором данного поста'));
       }
     });
-};
+}
