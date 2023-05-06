@@ -4,4 +4,4 @@ class ResourceUnavalableError extends Error {
     this.statusCode = 404;
   }
 }
-module.exports = ResourceUnavalableError;
+export default ResourceUnavalableError;

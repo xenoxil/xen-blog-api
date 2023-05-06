@@ -1,10 +1,12 @@
-const router = require('express').Router();
-const userRoute = require('./users');
-const postRoute = require('./posts');
-const auth = require('../middlewares/auth');
-const { loginValidation, signupValidation } = require('../middlewares/validation');
-const { createUser, login, logout } = require('../controllers/users');
-const ResourceUnavalableError = require('../errors/ResourceUnavailableError');
+import userRoute from './users.js';
+import postRoute from './posts.js';
+import auth from '../middlewares/auth.js';
+import { loginValidation, signupValidation } from '../middlewares/validation.js';
+import { createUser, login, logout } from '../controllers/users.js';
+import ResourceUnavalableError from '../errors/ResourceUnavailableError.js';
+import express from 'express';
+
+const router = express.Router();
 
 router.post(
   // описание роута
@@ -29,4 +31,4 @@ router.use('*', (req, res, next) => {
   next(new ResourceUnavalableError('Запрашиваемый ресурс не найден'));
 });
 
-module.exports = router;
+export default router;

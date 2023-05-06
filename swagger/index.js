@@ -1,7 +1,7 @@
-const { join, dirname } = require('path');
-const { fileURLToPath } = require('url');
-const swaggerAutogen = require('swagger-autogen');
-
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import swaggerAutogen from 'swagger-autogen';
+console.log(import.meta.url);
 const _dirname = dirname(fileURLToPath(import.meta.url));
 
 const doc = {

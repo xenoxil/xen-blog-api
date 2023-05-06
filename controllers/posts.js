@@ -1,11 +1,11 @@
-const Posts = require('../models/post');
-const Users = require('../models/user');
-const ResourceUnavailableError = require('../errors/ResourceUnavailableError');
-const BadRequestError = require('../errors/BadRequestError');
-const PermissionError = require('../errors/PermissionError');
+import Posts from '../models/post.js';
+import Users from '../models/user.js';
+import ResourceUnavailableError from '../errors/ResourceUnavailableError.js';
+import BadRequestError from '../errors/BadRequestError.js';
+import PermissionError from '../errors/PermissionError.js';
 
 //  получаем список всех фильмов сохранённых пользователем
-module.exports.getPostsWithPagination = (req, res, next) => {
+export function getPostsWithPagination(req, res, next) {
   const myCustomLabels = {
     totalDocs: 'totalPosts',
     limit: 'postsPerPage',
@@ -18,10 +18,10 @@ module.exports.getPostsWithPagination = (req, res, next) => {
       res.send({ posts: posts });
     })
     .catch(next);
-};
+}
 
 // создаём пост
-module.exports.createPost = (req, res, next) => {
+export function createPost(req, res, next) {
   const { date, message } = req.body;
   Users.findById(req.user._id)
     .then((user) => {
@@ -41,10 +41,10 @@ module.exports.createPost = (req, res, next) => {
         next(err);
       }
     });
-};
+}
 
 // обновляем пост
-module.exports.updatePost = (req, res, next) => {
+export function updatePost(req, res, next) {
   const { date, message, owner } = req.body;
   if (req.user._id !== owner.id) {
     next(new PermissionError('Ошибка. Пользователь не является автором данного поста'));
@@ -72,9 +72,9 @@ module.exports.updatePost = (req, res, next) => {
         next(err);
       }
     });
-};
+}
 
-module.exports.deletePost = (req, res, next) => {
+export function deletePost(req, res, next) {
   Posts.findById(postId)
     .orFail(() => {
       next(new ResourceUnavailableError('Пост не найден'));
@@ -94,4 +94,4 @@ module.exports.deletePost = (req, res, next) => {
         next(new PermissionError('Ошибка. Пользователь не является автором данного поста'));
       }
     });
-};
+}

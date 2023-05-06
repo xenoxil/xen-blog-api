@@ -1,4 +1,4 @@
-module.exports.errorHandler = (err, req, res, next) => {
+export function errorHandler(err, req, res, next) {
   // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
@@ -6,4 +6,4 @@ module.exports.errorHandler = (err, req, res, next) => {
     message: statusCode === 500 ? 'Ошибка на стороне сервера' : message,
   });
   return next();
-};
+}

@@ -1,17 +1,18 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cookies = require('cookie-parser');
-const { errors } = require('celebrate');
-const rateLimit = require('express-rate-limit');
-const cors = require('cors');
-const helmet = require('helmet');
-const router = require('./routes');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { errorHandler } = require('./middlewares/errorHandler');
-const fs = require('fs');
-const swaggerUi = require('swagger-ui-express');
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import cookies from 'cookie-parser';
+import { errors } from 'celebrate';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
+import helmet from 'helmet';
+import router from './routes/index.js';
+import { requestLogger, errorLogger } from './middlewares/logger.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import fs from 'fs';
+import swaggerUi from 'swagger-ui-express';
 
+dotenv.config();
 const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
 
 const { PORT = 3000, mongoDbPath, NODE_ENV } = process.env;

@@ -4,4 +4,4 @@ class NotUniqueEmailError extends Error {
     this.statusCode = 409;
   }
 }
-module.exports = NotUniqueEmailError;
+export default NotUniqueEmailError;

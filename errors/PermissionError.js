@@ -4,4 +4,4 @@ class PermissionError extends Error {
     this.statusCode = 403;
   }
 }
-module.exports = PermissionError;
+export default PermissionError;
