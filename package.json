@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "lint": "npx eslint . --ignore-pattern 'node_modules'",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "gen": "node ./swagger/index.js"
   },
   "keywords": [],
   "author": "YuriyStepanov",
@@ -20,10 +21,13 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.6",
     "express-winston": "^4.1.0",
+    "fs": "^0.0.1-security",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.12.13",
     "mongoose-paginate-v2": "^1.7.1",
+    "swagger-autogen": "^2.23.1",
+    "swagger-ui-express": "^4.6.3",
     "validator": "^13.7.0",
     "winston": "^3.3.3"
   },

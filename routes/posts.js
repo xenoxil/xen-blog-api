@@ -8,7 +8,7 @@ const {
 } = require('../controllers/posts');
 const { postIdValidation, postValidation } = require('../middlewares/validation');
 
-router.get('/', getPostsWithPagination);
+router.get('/:page', getPostsWithPagination);
 router.post('/', postValidation, createPost);
 router.patch('/:postId', postValidation, updatePost);
 router.delete('/:postId', postIdValidation, deletePost);

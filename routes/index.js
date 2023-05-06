@@ -6,7 +6,20 @@ const { loginValidation, signupValidation } = require('../middlewares/validation
 const { createUser, login, logout } = require('../controllers/users');
 const ResourceUnavalableError = require('../errors/ResourceUnavailableError');
 
-router.post('/signin', loginValidation, login);
+router.post(
+  // описание роута
+  // #swagger.description = 'Get all todos'
+  // возвращаемый ответ
+  /* #swagger.responses[200] = {
+     // описание ответа
+     description: 'Array of all todos',
+     // схема ответа - ссылка на модель
+     schema: { $ref: '#/definitions/Todos' }
+ } */
+  '/signin',
+  loginValidation,
+  login,
+);
 router.post('/signup', signupValidation, createUser);
 router.delete('/signout', auth, logout);
 router.use('/users', auth, userRoute);

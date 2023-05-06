@@ -9,6 +9,10 @@ const helmet = require('helmet');
 const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errorHandler } = require('./middlewares/errorHandler');
+const fs = require('fs');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
 
 const { PORT = 3000, mongoDbPath, NODE_ENV } = process.env;
 const app = express();
@@ -38,7 +42,7 @@ app.use(helmet());
 app.use(cookies());
 
 app.use(express.json());
-
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/', router);
 
 mongoose.connect(NODE_ENV === 'production' ? mongoDbPath : 'mongodb://localhost:27017/xenBlogDb', {
