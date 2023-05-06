@@ -26,4 +26,4 @@ postSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('post', postSchema);
 
-postSchema.paginate().then({});
+// postSchema.paginate().then({});

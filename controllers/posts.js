@@ -7,8 +7,8 @@ const PermissionError = require('../errors/PermissionError');
 //  получаем список всех фильмов сохранённых пользователем
 module.exports.getPostsWithPagination = (req, res, next) => {
   const myCustomLabels = {
-    totalDocs: 'postsCount',
-    limit: 'perPage',
+    totalDocs: 'totalPosts',
+    limit: 'postsPerPage',
     page: 'currentPage',
     totalPages: 'totalPages',
   };
@@ -21,7 +21,7 @@ module.exports.getPostsWithPagination = (req, res, next) => {
 };
 
 // создаём пост
-module.exports.createBlogPost = (req, res, next) => {
+module.exports.createPost = (req, res, next) => {
   const { date, message } = req.body;
   Users.findById(req.user._id)
     .then((user) => {
@@ -45,19 +45,24 @@ module.exports.createBlogPost = (req, res, next) => {
 
 // обновляем пост
 module.exports.updatePost = (req, res, next) => {
-  const { date, message, authorId, postId } = req.body;
-  if (req.user._id !== authorId) {
+  const { date, message, owner } = req.body;
+  if (req.user._id !== owner.id) {
     next(new PermissionError('Ошибка. Пользователь не является автором данного поста'));
   }
   Users.findById(req.user._id)
     .then((user) => {
-      Posts.findByIdAndUpdate(postId, {
+      Posts.findByIdAndUpdate(req.params.postId, {
         date,
         message,
-        author: user,
-      }).then((record) => {
-        res.send(record);
-      });
+        owner: user,
+        postId: req.params.postId,
+      })
+        .orFail(() => {
+          next(new ResourceUnavailableError('Пост не найден'));
+        })
+        .then((record) => {
+          res.send(record);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -70,15 +75,13 @@ module.exports.updatePost = (req, res, next) => {
 };
 
 module.exports.deletePost = (req, res, next) => {
-  const { authorId, postId } = req.body;
   Posts.findById(postId)
     .orFail(() => {
       next(new ResourceUnavailableError('Пост не найден'));
     })
     .then((post) => {
-      if (post.owner.id === authorId) {
+      if (post.owner.id === req.user._id) {
         Posts.findByIdAndRemove(req.params.postId)
-
           .then((deletedPost) => res.send({ data: deletedPost }))
           .catch((err) => {
             if (err.kind === 'ObjectId') {
