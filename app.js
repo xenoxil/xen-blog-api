@@ -13,7 +13,7 @@ import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
 
 dotenv.config();
-const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
+const swaggerFile = JSON.parse(fs.readFileSync('./vendor/swagger-api/swagger-ui/output.json'));
 
 const { PORT = 3000, mongoDbPath, NODE_ENV } = process.env;
 const app = express();
