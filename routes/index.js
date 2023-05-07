@@ -5,6 +5,11 @@ import { loginValidation, signupValidation } from '../middlewares/validation.js'
 import { createUser, login, logout } from '../controllers/users.js';
 import ResourceUnavalableError from '../errors/ResourceUnavailableError.js';
 import express from 'express';
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 const router = express.Router();
 
