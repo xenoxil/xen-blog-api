@@ -11,7 +11,7 @@ const doc = {
   },
 
   host: 'localhost:3000',
-  schemes: ['http', 'https'],
+  schemes: ['http'],
 };
 
 // путь и название генерируемого файла

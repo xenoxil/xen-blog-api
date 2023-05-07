@@ -5,7 +5,7 @@
     "description": "Blog API",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "http://130.193.52.232/:3000",
   "basePath": "/",
   "schemes": [
     "http"
