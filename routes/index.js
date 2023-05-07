@@ -5,8 +5,6 @@ import { loginValidation, signupValidation } from '../middlewares/validation.js'
 import { createUser, login, logout } from '../controllers/users.js';
 import ResourceUnavalableError from '../errors/ResourceUnavailableError.js';
 import express from 'express';
-import swaggerUi from 'swagger-ui-express';
-import fs from 'fs';
 
 const router = express.Router();
 
