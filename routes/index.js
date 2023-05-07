@@ -10,10 +10,10 @@ import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
 const router = express.Router();
 
-const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
+// const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
 
-router.use('/api-doc', swaggerUi.serve);
-router.get('/api-doc', swaggerUi.setup(swaggerFile));
+// router.use('/api-doc', swaggerUi.serve);
+// router.get('/api-doc', swaggerUi.setup(swaggerFile));
 router.post('/signin', loginValidation, login);
 router.post('/signup', signupValidation, createUser);
 router.delete('/signout', auth, logout);
