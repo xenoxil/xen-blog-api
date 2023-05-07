@@ -5,7 +5,7 @@
     "description": "Blog API",
     "version": "1.0.0"
   },
-  "host": "http://130.193.52.232",
+  "host": "130.193.52.232",
   "basePath": "/",
   "schemes": [
     "http"
@@ -34,7 +34,11 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/signup": {
@@ -97,27 +101,6 @@
         }
       }
     },
-    "/posts/{page}": {
-      "get": {
-        "description": "",
-        "tags": [
-          "posts"
-        ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/posts/": {
       "post": {
         "description": "",
@@ -145,7 +128,26 @@
         }
       }
     },
-    "/posts/{postId}": {
+    "/posts/{paramName}": {
+      "get": {
+        "description": "",
+        "tags": [
+          "posts"
+        ],
+        "parameters": [
+          {
+            "name": "paramName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "patch": {
         "description": "",
         "tags": [
@@ -153,7 +155,7 @@
         ],
         "parameters": [
           {
-            "name": "postId",
+            "name": "paramName",
             "in": "path",
             "required": true,
             "type": "string"
@@ -184,7 +186,7 @@
         ],
         "parameters": [
           {
-            "name": "postId",
+            "name": "paramName",
             "in": "path",
             "required": true,
             "type": "string"
