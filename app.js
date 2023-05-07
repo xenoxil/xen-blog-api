@@ -11,8 +11,9 @@ import { requestLogger, errorLogger } from './middlewares/logger.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
+import swaggerUiDist from 'swagger-ui-dist';
 
-const pathToSwaggerUi = swaggerUi.absolutePath();
+const pathToSwaggerUi = swaggerUiDist.absolutePath();
 
 dotenv.config();
 const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
