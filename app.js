@@ -12,6 +12,8 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import fs from 'fs';
 import swaggerUi from 'swagger-ui-express';
 
+const pathToSwaggerUi = swaggerUi.absolutePath();
+
 dotenv.config();
 const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
 const { PORT = 3000, mongoDbPath, NODE_ENV } = process.env;
@@ -37,6 +39,8 @@ app.use(helmet());
 app.use(cookies());
 
 app.use(express.json());
+
+app.use(express.static(pathToSwaggerUi));
 
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/', router);
