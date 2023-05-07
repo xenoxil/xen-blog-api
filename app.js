@@ -37,8 +37,9 @@ app.use(helmet());
 app.use(cookies());
 
 app.use(express.json());
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 app.use('/', router);
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 mongoose.connect(NODE_ENV === 'production' ? mongoDbPath : 'mongodb://localhost:27017/xenBlogDb', {
   useNewUrlParser: true,
