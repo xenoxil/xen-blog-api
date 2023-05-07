@@ -38,6 +38,7 @@ app.use(helmet());
 app.use(cookies());
 
 app.use(express.json());
+app.UseStaticFiles();
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/', router);
 
