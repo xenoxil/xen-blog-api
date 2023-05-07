@@ -14,7 +14,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerUiDist from 'swagger-ui-dist';
 
 dotenv.config();
-const pathToSwaggerUi = swaggerUiDist.absolutePath();
+// const pathToSwaggerUi = swaggerUiDist.absolutePath();
 const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
 const { PORT = 3000, mongoDbPath, NODE_ENV } = process.env;
 const app = express();
@@ -39,7 +39,7 @@ app.use(helmet());
 app.use(cookies());
 
 app.use(express.json());
-app.use(express.static(pathToSwaggerUi));
+// app.use(express.static(pathToSwaggerUi));
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/', router);
 
