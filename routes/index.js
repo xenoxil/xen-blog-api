@@ -10,8 +10,8 @@ import swaggerDocument from '../swagger/output.json' assert { type: 'json' };
 
 const router = express.Router();
 
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+router.use('/api-doc', swaggerUi.serve);
+router.get('/api-doc', swaggerUi.setup(swaggerDocument));
 router.post('/signin', loginValidation, login);
 router.post('/signup', signupValidation, createUser);
 router.delete('/signout', auth, logout);
