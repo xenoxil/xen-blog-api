@@ -14,7 +14,7 @@ router.delete('/signout', auth, logout);
 
 router.use('/users', auth, userRoute);
 router.use('/posts', auth, postRoute);
-router.use('/', auth);
+// router.use('/', auth);
 
 router.use('*', (req, res, next) => {
   next(new ResourceUnavalableError('Запрашиваемый ресурс не найден'));
