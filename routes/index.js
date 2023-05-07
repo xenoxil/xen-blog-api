@@ -6,12 +6,14 @@ import { createUser, login, logout } from '../controllers/users.js';
 import ResourceUnavalableError from '../errors/ResourceUnavailableError.js';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../swagger/output.json' assert { type: 'json' };
-
+// import swaggerDocument from '../swagger/output.json' assert { type: 'json' };
+import fs from 'fs';
 const router = express.Router();
 
+const swaggerFile = JSON.parse(fs.readFileSync('./swagger/output.json'));
+
 router.use('/api-doc', swaggerUi.serve);
-router.get('/api-doc', swaggerUi.setup(swaggerDocument));
+router.get('/api-doc', swaggerUi.setup(swaggerFile));
 router.post('/signin', loginValidation, login);
 router.post('/signup', signupValidation, createUser);
 router.delete('/signout', auth, logout);
