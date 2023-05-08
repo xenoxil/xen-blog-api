@@ -47,7 +47,7 @@ export function login(req, res, next) {
                 maxAge: 604800000,
                 httpOnly: true,
                 sameSite: 'none',
-                secure: true,
+                secure: false,
               })
               .send({ _id: req.body._id });
           }
