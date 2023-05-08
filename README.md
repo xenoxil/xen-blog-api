@@ -6,8 +6,7 @@
 Стэк: Express.js, nginx, Git, mongoDB, mongoose.js, javascript
 
 Ссылки на сайт:
-http://130.193.52.232/  -api
+http://130.193.52.232/    -swagger документация
+http://130.193.52.232/api -api
 
-Развернуть проект локально можно командой npm run start( предварительно npm install)
-Документация доступна локально по http://localhost:3000/api-doc/
 
