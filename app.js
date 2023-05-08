@@ -23,13 +23,13 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 150, // limit each IP to 150 requests per windowMs
 });
-// app.options('*', (req, res) => {
-//   res.set('Access-Control-Allow-Origin', ['http://localhost:3000']);
-//   res.set('Access-Control-Allow-Headers', 'Content-Type');
-//   res.set('Access-Control-Allow-Methods', ['PUT', 'GET', 'POST', 'DELETE', 'PATCH']);
-//   res.set('Access-Control-Allow-Credentials', 'true');
-//   res.send('ok');
-// });
+app.options('*', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.set('Access-Control-Allow-Methods', ['PUT', 'GET', 'POST', 'DELETE', 'PATCH']);
+  res.set('Access-Control-Allow-Credentials', 'true');
+  res.send('ok');
+});
 
 app.use(cors());
 
