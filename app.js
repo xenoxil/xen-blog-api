@@ -34,8 +34,8 @@ const limiter = rateLimit({
 
 app.use(
   cors({
-    // origin: 'http://localhost:3000',
-    origin: ['https://xenoxil.movies-explorer.nomoreparties.sbs', 'http://localhost:5173'],
+    origin: 'http://localhost:5173',
+    // origin: ['https://xenoxil.movies-explorer.nomoreparties.sbs', 'http://localhost:5173'],
     credentials: true,
   }),
 );
