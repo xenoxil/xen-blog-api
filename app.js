@@ -32,7 +32,13 @@ app.options('http://localhost:5173', (req, res) => {
   res.send('ok');
 });
 
-// app.use(cors());
+app.use(
+  cors({
+    // origin: 'http://localhost:3000',
+    origin: ['https://xenoxil.movies-explorer.nomoreparties.sbs', 'http://localhost:5173'],
+    credentials: true,
+  }),
+);
 
 app.use(requestLogger);
 app.use(limiter);
